@@ -1,25 +1,38 @@
+require './finder'
+require './employee'
+
+class BuilderException < StandardError
+end
+
 class Builder
+
+  def initialize finder=Finder.new
+    @finder = finder
+  end
 
   def build table_string
     lines = table_string.split("\n")
     start_index = find_start_of_table(lines)
-    lines = lines[start_index+1..-1]
-    lines.map { |line| extract_line(line) }
-  end
-
-  def extract_line line
-    match_data = line.match /(\w+) *\| *([\w ]+\w) *\| *(\w+)?/
-    fail 'invalid table line' if match_data.nil?
-    id         = match_data[1].to_i
-    name       = match_data[2]
-    manager_id = match_data[3].to_i unless match_data[3].nil?
-    {id: id, name: name, manager_id: manager_id }
+    raise BuilderException, 'empty table' if lines[start_index] == nil
+    lines = lines[start_index..-1]
+    employees = lines.map { |line| Employee.new line }
+    employees.map { |employee| link(employee, employees) }
   end
 
   def find_start_of_table lines
     index = lines.find_index { |line| line.downcase.match /employee id *\| *name *\| *manager id/ }
-    fail 'no table header' if index.nil?
-    index
+    if index == nil
+      index = 0
+    else
+      index += 1
+    end
   end
 
+  def link employee, employees
+    unless employee.manager.nil?
+      manager = @finder.find_by_id(employee.manager, employees) 
+      employee.manager = manager 
+    end
+    employee
+  end
 end
