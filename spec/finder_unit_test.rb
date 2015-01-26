@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require './finder'
 
-class TestEmployeeFinder < Minitest::Test
+class TestFinder < Minitest::Test
 
   Employee = Struct.new :id, :name
 

@@ -15,7 +15,7 @@ class Builder
     start_index = find_start_of_table(lines)
     raise BuilderException, 'empty table' if lines[start_index] == nil
     lines = lines[start_index..-1]
-    employees = lines.map { |line| Employee.new line }
+    employees = lines.map { |line| Employee.parse line }
     employees.map { |employee| link(employee, employees) }
   end
 
