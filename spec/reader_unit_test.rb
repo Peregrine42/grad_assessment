@@ -4,7 +4,12 @@ require './reader'
 class TestReader < Minitest::Test
 
   def test_it_gets_a_string_from_a_file
-    assert_equal "foo\n", Reader.new.read('./spec/fixtures/sample.txt')
+    file = Minitest::Mock.new
+    file.expect :read, "foo\n"
+    File.stub :open, 'some file', file do
+      assert_equal "foo\n", Reader.new.read('some file')
+    end
+    file.verify
   end
 
 end
