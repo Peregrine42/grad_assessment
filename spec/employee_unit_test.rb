@@ -1,8 +1,7 @@
 require 'minitest/autorun'
-require './employee'
+require './lib/employee'
 
 class TestEmployee < Minitest::Test
-
   def test_on_valid_line
     input = '| 3           | a aa a | 1          |'
     result = Employee.parse input
@@ -32,5 +31,4 @@ class TestEmployee < Minitest::Test
     error = assert_raises(EmployeeException) { Employee.parse input }
     assert_equal('invalid table line', error.message)
   end
-
 end

@@ -1,8 +1,7 @@
 require 'minitest/autorun'
-require './finder'
+require './lib/finder'
 
 class TestFinder < Minitest::Test
-
   Employee = Struct.new :id, :name
 
   def setup
@@ -15,7 +14,6 @@ class TestFinder < Minitest::Test
               @employee_2,
               @employee_3,
               @employee_4]
-
   end
 
   def test_find_by_id
@@ -23,6 +21,7 @@ class TestFinder < Minitest::Test
   end
 
   def test_find_by_name
-    assert_equal([@employee_3, @employee_4], Finder.new.find_by_name('frank', @table))
+    result = Finder.new.find_by_name('frank', @table)
+    assert_equal([@employee_3, @employee_4], result)
   end
 end

@@ -2,14 +2,14 @@ require 'minitest/autorun'
 require './walker'
 
 class TestWalker < Minitest::Test
-
   Employee = Struct.new :id, :manager
 
   def test_path_between
     manager  = Employee.new(2, nil)
     employee = Employee.new(1, manager)
 
-    assert_equal([employee, manager], Walker.new.path_between(employee, manager))
+    actual = Walker.new.path_between(employee, manager)
+    assert_equal([employee, manager], actual)
   end
 
   def test_long_path_between

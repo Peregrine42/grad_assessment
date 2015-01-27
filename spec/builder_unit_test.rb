@@ -1,12 +1,13 @@
 require 'minitest/autorun'
-require './builder'
+require './lib/builder'
 
 class TestBuilder < Minitest::Test
-
   Employee = Struct.new :id, :manager
 
   def test_find_start_of_lines
-    input = ['nope', 'employee id', 'employee id | name', 'employee id | name            | manager id']
+    input = ['nope', 'employee id',
+             'employee id | name',
+             'employee id | name            | manager id']
     assert_equal 4, Builder.new.find_start_of_table(input)
   end
 
