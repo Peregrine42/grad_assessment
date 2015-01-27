@@ -1,7 +1,7 @@
 require 'minitest/autorun'
-require './chainlink'
+require './lib/chainlink'
 
-class TestScript < Minitest::Test
+class IntegrationTestScript < Minitest::Test
   def test_it_finds_a_short_chain_of_command_between_two_employees
     chainlink = Chainlink.new
     path = './spec/fixtures/superheroes.txt'
@@ -17,7 +17,7 @@ class TestScript < Minitest::Test
     path = './spec/fixtures/superheroes.txt'
 
     expected_result = ['Batman (16) -> Black Widow (6) ->' \
-                       ' Gonzo the Great (2) -> Dangermouse (1)' \
+                       ' Gonzo the Great (2) -> Dangermouse (1) ' \
                        '<- Invisible Woman (3) <- Super Ted (15)']
     actual_result = chainlink.walk(path, 'Batman', 'Super Ted')
 
