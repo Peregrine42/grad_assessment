@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './lib/builder'
+require './lib/chainlink'
 
 class TestBuilder < Minitest::Test
   Employee = Struct.new :id, :manager

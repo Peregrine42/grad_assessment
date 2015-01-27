@@ -1,4 +1,6 @@
-class EmployeeException < StandardError
+require './lib/chainlink'
+
+class EmployeeException < ChainlinkException
 end
 
 class Employee
@@ -20,7 +22,7 @@ class Employee
   end
 
   def inspect
-    "#{name} manager: #{manager}"
+    to_s
   end
 
   def to_s
@@ -33,5 +35,12 @@ class Employee
 
   def ceo?
     manager.nil?
+  end
+
+  # TODO: test!
+  def chain_of_command(chain = [])
+    chain << self
+    return chain if ceo?
+    manager.chain_of_command chain
   end
 end

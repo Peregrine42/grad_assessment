@@ -1,7 +1,8 @@
 require './lib/finder'
 require './lib/employee'
+require './lib/chainlink'
 
-class BuilderException < StandardError
+class BuilderException < ChainlinkException
 end
 
 class Builder

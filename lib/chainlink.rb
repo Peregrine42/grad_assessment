@@ -20,19 +20,18 @@ class Chainlink
     @joiner = joiner
   end
 
-  def walk(file_name, start_employee_name, end_employee_name)
+  def walk(file_name, start_name, end_name)
     table_as_string = @reader.read(file_name)
     employees       = @builder.build(table_as_string)
 
-    start_employees = @finder.find_by_name start_employee_name, employees
-    end_employees   = @finder.find_by_name end_employee_name,   employees
+    start_employees = @finder.find_by_name start_name, employees
+    end_employees   = @finder.find_by_name end_name,   employees
 
-    fail ChainlinkException, "#{start_employee_name} not found in table" if start_employees.empty?
-    fail ChainlinkException, "#{end_employee_name} not found in table" if end_employees.empty?
+    fail ChainlinkException, "#{start_name} not found" if start_employees.empty?
+    fail ChainlinkException, "#{end_name} not found" if end_employees.empty?
 
     start_employees.product(end_employees).map do |start_employee, end_employee|
-      chain_up, manager, chain_down = @walker.walk start_employee, end_employee
-      @joiner.join(chain_up, manager, chain_down)
+      @joiner.join(*@walker.compare(start_employee, end_employee))
     end
   end
 end
