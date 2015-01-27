@@ -3,7 +3,7 @@ Duncan Fermor
 
 Finds the chain of command between employees.
 
-Tested with Ruby version 2.1.5p273
+Tested with Ruby version 2.1.5
 
 To run, please enter from the command line:
 ruby chainlink.rb "filename", "name1", "name2"
