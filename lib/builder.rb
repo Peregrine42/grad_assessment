@@ -1,6 +1,5 @@
-require './lib/finder'
-require './lib/employee'
 require './lib/chainlink'
+require './lib/employee'
 
 class BuilderException < ChainlinkException
 end

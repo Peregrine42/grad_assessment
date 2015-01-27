@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require './lib/employee'
+require './lib/chainlink'
 
 class TestEmployee < Minitest::Test
   def test_on_valid_line

@@ -1,6 +1,4 @@
 require 'minitest/autorun'
-require './lib/walker'
-require './lib/employee'
 require './lib/chainlink'
 
 class TestWalker < Minitest::Test

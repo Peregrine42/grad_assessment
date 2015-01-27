@@ -1,5 +1,4 @@
 require 'minitest/autorun'
-require './lib/builder'
 require './lib/chainlink'
 
 class TestBuilder < Minitest::Test

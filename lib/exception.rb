@@ -1,0 +1,3 @@
+class ChainlinkException < StandardError
+end
+

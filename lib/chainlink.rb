@@ -1,11 +1,9 @@
+require './lib/exception'
 require './lib/reader'
 require './lib/builder'
 require './lib/finder'
 require './lib/walker'
 require './lib/joiner'
-
-class ChainlinkException < StandardError
-end
 
 class Chainlink
   def initialize(reader = Reader.new,
