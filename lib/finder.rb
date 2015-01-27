@@ -5,6 +5,6 @@ class Finder
   end
 
   def find_by_name(name, employee_list)
-    employee_list.select { |employee| employee.name == name }
+    employee_list.select { |employee| employee.name.downcase == name.downcase }
   end
 end

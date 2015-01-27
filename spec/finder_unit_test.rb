@@ -21,7 +21,7 @@ class TestFinder < Minitest::Test
   end
 
   def test_find_by_name
-    result = Finder.new.find_by_name('frank', @table)
+    result = Finder.new.find_by_name('FraNk', @table)
     assert_equal([@employee_3, @employee_4], result)
   end
 end

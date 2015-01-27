@@ -49,7 +49,7 @@ class IntegrationTestScript < Minitest::Test
                        '-> Iron Man (9) -> Superman (10) <- Dangermouse (1) ' \
                        '<- Invisible Woman (3) <- Super Ted (15)']
 
-    actual_result = chainlink.walk(path, 'Batman', 'Super Ted')
+    actual_result = chainlink.walk(path, 'batman', 'Super Ted')
 
     assert_equal(expected_result, actual_result)
   end
@@ -59,6 +59,14 @@ class IntegrationTestScript < Minitest::Test
     assert_raises BuilderException do
       path = './spec/fixtures/no_table.txt'
       chainlink.walk(path, 'Batman', 'Super Ted')
+    end
+  end
+
+  def test_unknown_name_raises_error
+    chainlink = Chainlink.new
+    assert_raises ChainlinkException do
+      path = './spec/fixtures/superheroes.txt'
+      chainlink.walk(path, 'Batman', 'Foo')
     end
   end
 
