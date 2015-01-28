@@ -25,9 +25,6 @@ class Chainlink
     start_employees = @finder.find_by_name start_name, employees
     end_employees   = @finder.find_by_name end_name,   employees
 
-    fail ChainlinkException, "#{start_name} not found" if start_employees.empty?
-    fail ChainlinkException, "#{end_name} not found" if end_employees.empty?
-
     start_employees.product(end_employees).map do |start_employee, end_employee|
       @joiner.join(*@walker.compare(start_employee, end_employee))
     end

@@ -64,7 +64,7 @@ class IntegrationTestScript < Minitest::Test
 
   def test_unknown_name_raises_error
     chainlink = Chainlink.new
-    assert_raises ChainlinkException do
+    assert_raises FinderException do
       path = './spec/fixtures/superheroes.txt'
       chainlink.walk(path, 'Batman', 'Foo')
     end

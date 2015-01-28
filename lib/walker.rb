@@ -51,6 +51,7 @@ class Walker
     def initialize combined_chains
       @pairs = combined_chains.group_by { |e1, e2| e1 == e2 }
 
+      fail WalkerException, 'no path between the same employee' if @pairs[false].nil?
       chain1, chain2 = @pairs[false].transpose
       
       # have chain one start with the employee
@@ -59,6 +60,7 @@ class Walker
       # caused by uneven chains
       @chain1 = chain1.reverse.compact
       @chain2 = chain2.compact
+
     end
 
     def manager
