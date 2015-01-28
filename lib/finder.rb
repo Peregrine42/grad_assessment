@@ -10,7 +10,7 @@ class Finder
   end
 
   def find_by_name(name, employee_list)
-    result = employee_list.select do |employee| 
+    result = employee_list.select do |employee|
       employee.name.downcase == name.downcase
     end
     fail FinderException, "#{name} not found" if result.empty?

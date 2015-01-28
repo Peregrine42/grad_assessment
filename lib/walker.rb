@@ -48,11 +48,14 @@ class Walker
 
     attr_reader :chain1, :chain2
 
-    def initialize combined_chains
-      @pairs = combined_chains.group_by { |e1, e2| e1 == e2 }
+    def initialize pairs
+      fail WalkerException, 'no path between the same employee' if pairs.nil?
+      grouped_pairs = pairs.group_by { |e1, e2| e1 == e2 }
 
-      fail WalkerException, 'no path between the same employee' if @pairs[false].nil?
-      chain1, chain2 = @pairs[false].transpose
+      fail WalkerException, 'no path between employees' if grouped_pairs[true].nil?
+      @managers = grouped_pairs[true]
+
+      chain1, chain2 = grouped_pairs[false].transpose
       
       # have chain one start with the employee
       # (chain2 already ends with the employee)
@@ -60,15 +63,12 @@ class Walker
       # caused by uneven chains
       @chain1 = chain1.reverse.compact
       @chain2 = chain2.compact
-
     end
 
     def manager
       # the highest common manager is the last in the identical pairs
       # if we can't find a common manager, that's an error
-      managers = @pairs[true]
-      fail WalkerException, 'no path between employees' if managers.nil?
-      managers.last[0]
+      @managers.last[0]
     end
 
   end
