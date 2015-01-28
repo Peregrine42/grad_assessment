@@ -5,48 +5,45 @@ end
 
 class Walker
   def compare(emp1, emp2)
-    # start from the ceo, working to each employee
     chain1 = emp1.chain_of_command.reverse
     chain2 = emp2.chain_of_command.reverse
 
     chain1, chain2 = pad_arrays(chain1, chain2)
 
-    # zip the two arrays together
-    combined = chain1.zip chain2
+    pairs = chain1.zip chain2
 
-    pairs = ChainComparison.new(combined)
-
-    # compact to remove any trailing nils
-    [pairs.chain1, pairs.manager, pairs.chain2]
+    build_chain(pairs)
   end
 
   private
 
-  class ChainComparison
-    attr_reader :chain1, :chain2
+  def build_chain(pairs)
+    grouped_pairs = pairs.group_by { |e1, e2| e1 == e2 }
+    validate_pairs grouped_pairs
 
-    def initialize(pairs)
-      grouped_pairs = pairs.group_by { |e1, e2| e1 == e2 }
-      fail WalkerException, 'no path between the same employee' if grouped_pairs[false].nil?
+    managers = grouped_pairs[true]
 
-      fail WalkerException, 'no path between employees' if grouped_pairs[true].nil?
-      @managers = grouped_pairs[true]
+    chain1, chain2 = grouped_pairs[false].transpose
 
-      chain1, chain2 = grouped_pairs[false].transpose
+    manager = managers.last[0]
 
-      # have chain one start with the employee
-      # (chain2 already ends with the employee)
-      # compact is used to get rid of trailing nils
-      # caused by uneven chains
-      @chain1 = chain1.reverse.compact
-      @chain2 = chain2.compact
-    end
+    chain1 = chain1.reverse.compact
+    chain2 = chain2.compact
 
-    def manager
-      # the highest common manager is the last in the identical pairs
-      # if we can't find a common manager, that's an error
-      @managers.last[0]
-    end
+    [chain1, manager, chain2]
+  end
+
+  def validate_pairs(pairs)
+    fail WalkerException, 'duplicate employee' if same_employee pairs
+    fail WalkerException, 'no path between employees' if no_path pairs
+  end
+
+  def same_employee(pairs)
+    pairs[false].nil?
+  end
+
+  def no_path(pairs)
+    pairs[true].nil?
   end
 
   def pad_arrays(*arrays)
