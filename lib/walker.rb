@@ -22,11 +22,9 @@ class Walker
     validate_pairs grouped_pairs
 
     managers = grouped_pairs[true]
-
-    chain1, chain2 = grouped_pairs[false].transpose
-
     manager = managers.last[0]
 
+    chain1, chain2 = grouped_pairs[false].transpose
     chain1 = chain1.reverse.compact
     chain2 = chain2.compact
 

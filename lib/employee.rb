@@ -37,7 +37,6 @@ class Employee
     manager.nil?
   end
 
-  # TODO: test!
   def chain_of_command(chain = [])
     chain << self
     return chain if ceo?

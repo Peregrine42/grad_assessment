@@ -11,8 +11,10 @@ class Builder
 
   def build(table_string)
     lines = table_string.split("\n")
+
     start_index = find_start_of_table(lines)
     fail BuilderException, 'empty table' if lines[start_index].nil?
+
     lines = lines[start_index..-1]
     employees = lines.map { |line| Employee.parse line }
     employees.map { |employee| link(employee, employees) }
