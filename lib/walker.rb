@@ -45,10 +45,9 @@ class Walker
   private
 
   class ChainComparison
-
     attr_reader :chain1, :chain2
 
-    def initialize pairs
+    def initialize(pairs)
       fail WalkerException, 'no path between the same employee' if pairs.nil?
       grouped_pairs = pairs.group_by { |e1, e2| e1 == e2 }
 
@@ -56,7 +55,7 @@ class Walker
       @managers = grouped_pairs[true]
 
       chain1, chain2 = grouped_pairs[false].transpose
-      
+
       # have chain one start with the employee
       # (chain2 already ends with the employee)
       # compact is used to get rid of trailing nils
@@ -70,7 +69,6 @@ class Walker
       # if we can't find a common manager, that's an error
       @managers.last[0]
     end
-
   end
 
   def pad_arrays(*arrays)
